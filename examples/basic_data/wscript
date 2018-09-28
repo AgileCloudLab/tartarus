@@ -1,0 +1,5 @@
+def build(bld):
+    bld(features = 'cxx cxxprogram',
+        target = 'basic_data_example',
+        source = 'basic_data.cpp',
+        use = ['tartarus'])
