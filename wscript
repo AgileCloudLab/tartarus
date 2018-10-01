@@ -7,6 +7,6 @@ def configure(cnf) :
 def build(bld):
 
     bld( name = 'tartarus',
-         export_includes = 'src/tartarus')
+         export_includes = ['src/tartarus', 'src/tartarus/model'])
 
     bld.recurse('examples/basic_data')

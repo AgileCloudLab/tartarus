@@ -18,6 +18,7 @@ public:
     data_container(uint64_t data_id, std::vector<uint8_t> raw_data) :
         m_data_id(data_id), m_raw_data(raw_data) {}
 
+    // TODO: Take a pair
     data_container(uint64_t data_id, std::vector<uint8_t> pivot,
                    std::vector<uint8_t> deviation) :
         m_data_id(data_id), m_pivot(pivot), m_deviation(deviation) {}
