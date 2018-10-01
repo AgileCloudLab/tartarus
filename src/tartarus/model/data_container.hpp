@@ -6,6 +6,8 @@
 
 namespace tartarus
 {
+namespace model
+{
 ///
 /// data_containter:
 /// This class servers as a wrapper for data representation in
@@ -52,10 +54,26 @@ public:
     {
         return m_deviation;
     }
+
+    bool is_raw_data_container()
+    {
+        return !(m_raw_data.empty());
+    }
+
+    bool is_pivot_container()
+    {
+        return !(m_pivot.empty());
+    }
+
+    bool is_deviation_container()
+    {
+        return !(m_deviation.empty());
+    }
 private:
     uint64_t m_data_id;
     std::vector<uint8_t> m_raw_data;
     std::vector<uint8_t> m_pivot; //TODO: BETTER NAME
     std::vector<uint8_t> m_deviation;
 };
+}
 }
