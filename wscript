@@ -9,4 +9,5 @@ def build(bld):
     bld( name = 'tartarus',
          export_includes = ['src/tartarus', 'src/tartarus/model'])
 
-    bld.recurse('examples/basic_data')
+#    bld.recurse('examples/basic_data')
+    bld.recurse('examples/raw_data')
