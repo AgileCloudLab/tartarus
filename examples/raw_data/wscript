@@ -1,6 +1,6 @@
 def build(bld):
     bld(features = 'cxx cxxprogram',
-        target = 'basic_data_example',
-        source = 'basic_data.cpp',
+        target = 'raw_data_example',
+        source = 'raw_data_example.cpp',
         includes = ['../../src'],
         use = ['tartarus'])

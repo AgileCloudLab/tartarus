@@ -1,0 +1,6 @@
+def build(bld):
+    bld(features = 'cxx cxxprogram',
+        target = 'coded_data_test',
+        source = 'coded_data_test.cpp',
+        includes=['../../build/include/', '../../src/'],
+        use = ['tartarus'])
