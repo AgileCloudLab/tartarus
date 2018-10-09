@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+build/
+*~
+resolve_lonks
+*.pyc
+*.pyrc
