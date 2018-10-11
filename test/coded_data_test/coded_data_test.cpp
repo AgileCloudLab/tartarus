@@ -39,13 +39,7 @@ TEST(test_coded_data, test_initialize)
 
     ASSERT_FALSE(deviation.empty());
 
-
-    tartarus::model::coded_data coded;
-
-    coded.file_id = file_id;
-    coded.pivot = pivot;
-    coded.deviation = deviation;
-
+    tartarus::model::coded_data coded = {file_id, pivot, deviation};
 
     // ASSERT that the coded is initialised correct
     ASSERT_TRUE(coded.file_id == file_id);

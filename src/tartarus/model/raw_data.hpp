@@ -8,8 +8,8 @@ namespace tartarus
 namespace model
 {
 struct raw_data {
-    uint64_t file_id;
-    std::vector<uint8_t> data;
+    const uint64_t file_id;
+    const std::vector<uint8_t> data;
 };
 }
 }

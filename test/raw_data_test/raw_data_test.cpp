@@ -1,5 +1,7 @@
 #include <tartarus/model/raw_data.hpp>
 
+#include <gtest/gtest.h>
+
 #include <vector>
 #include <cstdint>
 
@@ -16,21 +18,15 @@ int main(void)
 
     uint64_t file_id = 0;
 
-    // Data size in bytes
-    // 128 KB
     uint32_t data_size = 1024 * 128;
-
-    // Initialise a vector with space for
-    // #entries = 128KB
     std::vector<uint8_t> data(data_size);
-
+    ASSERT_FALSE(data.empty());
     // Randomly fill data with data
     std::generate(data.begin(), data.end(), rand);
+    ASSERT_FALSE(data.empty());
 
     tartarus::model::raw_data raw = {file_id, data};
 
-    assert(raw.file_id == file_id);
-    assert(raw.data == data);
-
-    std::cout << "SUCCESS WE REACH THE END OF THE PROGRAM" << std::endl;
+    ASSERT_TRUE(raw.file_id == file_id);
+    ASSERT_TRUE(raw.data == data);
 }

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cppcheck --enable=all --check-config src/* tests/*
+
+#TODO - make clang-tidy use the generated compile_commands.json file
+clang++-6.0 -MJ compile.o.json -std=c++17 -Wall -Werror -Wextra \
+      src/* tests/* >/dev/null 2>&1
+sed -e '1s/^/[\n/' -e '$s/,$/\n]/' *.o.json > compile_commands.json
+rm compile.o.json
+clang-tidy -checks=* src/* tests/*
+
+if which codeclimate >/dev/null
+then
+    codeclimate analyze
+fi
