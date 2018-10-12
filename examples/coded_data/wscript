@@ -1,4 +1,7 @@
 def build(bld):
+    bld.env.append_value('CXXFLAGS',
+                         ['-std=c++17', '-Wall', '-Werror', '-Wextra',
+                          '-pthread'])
     bld(features = 'cxx cxxprogram',
         target = 'coded_data_example',
         source = 'coded_data_example.cpp',
