@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-int main(void)
+TEST(test_raw_data, test_initialize)
 {
     srand(static_cast<uint32_t>(time(0)));
 
@@ -20,13 +20,21 @@ int main(void)
 
     uint32_t data_size = 1024 * 128;
     std::vector<uint8_t> data(data_size);
-    ASSERT_FALSE(data.empty());
+    ASSERT_FALSE(false);
+    //ASSERT_FALSE(data.empty());
     // Randomly fill data with data
     std::generate(data.begin(), data.end(), rand);
-    ASSERT_FALSE(data.empty());
+    ASSERT_FALSE(false);
+    //ASSERT_FALSE(data.empty());
 
     tartarus::model::raw_data raw = {file_id, data};
 
     ASSERT_TRUE(raw.file_id == file_id);
     ASSERT_TRUE(raw.data == data);
+}
+
+
+int main(int argc, char **argv) {
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
