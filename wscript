@@ -3,6 +3,8 @@ from scripts.waf import utils
 APPNAME = 'tartarus'
 VERSION = '0.0.1'
 
+#cxx_compiler['linux'] = ['clang++']
+
 def options(opt) :
     opt.load('compiler_cxx')
 

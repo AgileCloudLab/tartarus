@@ -30,11 +30,6 @@ int main(void)
 
     tartarus::model::coded_data coded = {file_id, pivot, deviation};
 
-    // coded.file_id = ;
-    // coded.pivot = ;
-    // coded.deviation = deviation;
-
-
     assert(coded.file_id == file_id);
     assert(coded.pivot == pivot);
     assert(coded.deviation == deviation);
