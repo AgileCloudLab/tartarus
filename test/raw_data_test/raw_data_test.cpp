@@ -12,6 +12,7 @@
 
 #include <iostream>
 
+
 TEST(test_raw_data, test_initialize)
 {
     srand(static_cast<uint32_t>(time(0)));
