@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-int main(void)
+TEST(test_coded_data, test_initialize)
 {
     srand(static_cast<uint32_t>(time(0)));
 
@@ -29,4 +29,9 @@ int main(void)
 
     ASSERT_TRUE(raw.file_id == file_id);
     ASSERT_TRUE(raw.data == data);
+}
+
+int main(int argc, char **argv) {
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
