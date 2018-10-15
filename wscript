@@ -1,15 +1,20 @@
+from waflib.Tools.compiler_cxx import cxx_compiler
 from scripts.waf import utils
 
 APPNAME = 'tartarus'
 VERSION = '0.0.1'
 
-#cxx_compiler['linux'] = ['clang++']
+cxx_compiler['linux'] = ['clang++']
 
 def options(opt) :
     opt.load('compiler_cxx')
 
 def configure(cnf) :
     cnf.load('compiler_cxx')
+    cnf.env.append_value('LINKFLAGS',
+                         ['-std=c++17', '-Wall', '-Werror', '-Wextra',
+                         '-pthread'])
+
 
 def build(bld):
 

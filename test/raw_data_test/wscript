@@ -1,4 +1,7 @@
 def build(bld):
+    #bld.env.append_value('LINKFLAGS',
+    #                     ['-std=c++17', '-Wall', '-Werror', '-Wextra',
+    #                      '-pthread'])
     bld(features = 'cxx cxxprogram',
         target = 'raw_data_test',
         source = 'raw_data_test.cpp',
