@@ -9,7 +9,7 @@ namespace model
 {
 struct raw_data {
     const uint64_t file_id;
-    const std::vector<uint8_t> data;
+    std::vector<uint8_t> data;
 };
 }
 }

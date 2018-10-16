@@ -39,12 +39,15 @@ TEST(test_coded_data, test_initialize)
 
     ASSERT_FALSE(deviation.empty());
 
-    tartarus::model::coded_data coded = {file_id, pivot, deviation};
-
+    std::vector<tartarus::model::coded_pair> empty;
+    tartarus::model::coded_pair pair = {pivot, deviation};
+    tartarus::model::coded_data coded = {file_id, empty};
+    coded.pairs.push_back(pair);
+    
     // ASSERT that the coded is initialised correct
     ASSERT_TRUE(coded.file_id == file_id);
-    ASSERT_TRUE(coded.pivot == pivot);
-    ASSERT_TRUE(coded.deviation == deviation);
+    ASSERT_TRUE(coded.pairs[0].pivot == pivot);
+    ASSERT_TRUE(coded.pairs[0].deviation == deviation);
 
 }
 

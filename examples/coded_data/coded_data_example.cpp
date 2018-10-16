@@ -27,12 +27,14 @@ int main(void)
     std::vector<uint8_t> deviation(deviation_size);
     std::generate(deviation.begin(), deviation.end(), rand);
 
-
-    tartarus::model::coded_data coded = {file_id, pivot, deviation};
+    std::vector<tartarus::model::coded_pair> empty;
+    tartarus::model::coded_pair pair = {pivot, deviation};
+    tartarus::model::coded_data coded = {file_id, empty};
+    coded.pairs.push_back(pair);
 
     assert(coded.file_id == file_id);
-    assert(coded.pivot == pivot);
-    assert(coded.deviation == deviation);
+    assert(coded.pairs[0].pivot == pivot);
+    assert(coded.pairs[0].deviation == deviation);
 
     std::cout << "SUCCESS WE REACH THE END OF THE PROGRAM" << std::endl;
 }
