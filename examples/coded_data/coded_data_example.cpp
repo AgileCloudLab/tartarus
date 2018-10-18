@@ -22,7 +22,7 @@ int main(void)
     // Randomly generate the deviation
     std::generate(pivot.begin(), pivot.end(), rand);
 
-    // A 2KB deviation
+    // A 4KB deviation
     uint32_t deviation_size = 1024 * 4;
     std::vector<uint8_t> deviation(deviation_size);
     std::generate(deviation.begin(), deviation.end(), rand);
