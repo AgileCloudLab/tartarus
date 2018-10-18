@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+build/
+*~
+resolve_lonks
+*.pyc
+*.pyrc
+.waf*
+resolve_symlinks/
+resolved_dependencies/
+.lock-waf_darwin_build
