@@ -5,7 +5,7 @@ def build(bld):
     bld(features = 'cxx cxxprogram',
         target = 'raw_data_test',
         source = 'raw_data_test.cpp',
-        includes=['../../include/', '../../src/'],
-        lib=['gtestmock'],
+#        includes=['../../src/'],
+        lib=['gtestmock', 'gtest'],
         libpath=['lib'],
-        use = ['tartarus'])
+        use = ['tartarus', 'gtest'])

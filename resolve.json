@@ -1,9 +1,9 @@
 [
     {
-        "name": "googletest",
+        "name": "gtest",
         "resolver": "git",
         "method": "checkout",
-        "checkout": "release-1.8.1",
-        "sources": ["https://github.com/google/googletest.git"]
+        "checkout": "v1.0",
+        "sources": ["github.com/AgileCloudLab/gtest.git"]
     }
 ]
