@@ -22,7 +22,7 @@ def build(bld):
         export_includes='./src')
 
     # Build Test
-    # bld.recurse('test/coded_data_test')
+    bld.recurse('test/coded_data_test')
     # bld.recurse('test/raw_data_test')
 
     # Build Examples
