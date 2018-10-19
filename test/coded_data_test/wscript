@@ -2,7 +2,7 @@ def build(bld):
     bld(features = 'cxx cxxprogram',
         target = 'coded_data_test',
         source = 'coded_data_test.cpp',
-        includes=['../../src/'],
+        #includes=['../../src/'],
         lib=['gtestmock'],
         libpath=['lib'],
-        use = ['tartarus', 'gtest'])
+        use = ['tartarus_includes', 'gtest'])
