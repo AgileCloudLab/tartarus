@@ -17,9 +17,6 @@ def configure(cnf) :
 
 
 def build(bld):
-
-#    utils.exec_command(bld, 'bash scripts/deps/gtest.sh')
-
     bld(name = 'tartarus_includes',
         includes='./src',
         export_includes='./src')
