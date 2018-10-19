@@ -23,7 +23,7 @@ def build(bld):
 
     # Build Test
     bld.recurse('test/coded_data_test')
-    # bld.recurse('test/raw_data_test')
+    bld.recurse('test/raw_data_test')
 
     # Build Examples
     bld.recurse('examples/raw_data')
