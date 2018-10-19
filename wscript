@@ -17,9 +17,10 @@ def configure(cnf) :
 
 
 def build(bld):
+    utils.exec_command(bld, 'bash scripts/deps/gtest.sh')
     bld(name = 'tartarus_includes',
-        includes='./src',
-        export_includes='./src')
+        export_includes='./src ./build/include')
+    bld.read_stlib('gtestmock', paths=['./build/lib'])
 
     # Build Test
     bld.recurse('test/coded_data_test')
@@ -28,3 +29,7 @@ def build(bld):
     # Build Examples
     bld.recurse('examples/raw_data')
     bld.recurse('examples/coded_data')
+
+def test(ctx):
+    utils.exec_command(ctx, './build/test/raw_data_test/raw_data_test')
+    utils.exec_command(ctx, './build/test/coded_data_test/coded_data_test')

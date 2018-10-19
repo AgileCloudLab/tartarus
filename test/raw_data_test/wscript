@@ -3,4 +3,4 @@ def build(bld):
         target = 'raw_data_test',
         source = 'raw_data_test.cpp',
         libpath=['lib'],
-        use = ['tartarus_includes', 'gtest'])
+        use = ['tartarus_includes', 'gtestmock'])
