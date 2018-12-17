@@ -2,7 +2,7 @@ from waflib.Tools.compiler_cxx import cxx_compiler
 from scripts.waf import utils
 
 APPNAME = 'tartarus'
-VERSION = '0.0.1'
+VERSION = '1.0.4'
 
 cxx_compiler['linux'] = ['clang++']
 
