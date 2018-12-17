@@ -2,8 +2,8 @@
     {
         "name": "gtest",
         "resolver": "git",
-        "method": "checkout",
-        "checkout": "1.0.1",
+        "method": "semver",
+        "major": 1,
         "sources": ["github.com/AgileCloudLab/gtest.git"]
     }
 ]
