@@ -1,0 +1,5 @@
+def build(bld):
+    bld(features = 'cxx cxxprogram',
+        target = 'json_reader_test',
+        source = 'json_reader_test.cpp',
+        use = ['tartarus_includes', 'gtest'])
