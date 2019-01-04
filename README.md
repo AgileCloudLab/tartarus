@@ -1,5 +1,5 @@
 # tartarus
-Tartarus is a untility library containg common models and other components for the IoT demo
+Tartarus is a utility library containg common models and other components for the IoT demo
 
 # JSON
 
