@@ -1,0 +1,6 @@
+def build(bld):
+    bld(features = 'cxx cxxprogram',
+        target = 'test_vector_helpers',
+        source = 'test_vector_helpers.cpp',
+        libpath=['lib'],
+        use = ['tartarus_includes', 'gtest'])

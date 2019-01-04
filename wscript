@@ -24,7 +24,9 @@ def build(bld):
     # Build Test
     bld.recurse('test/coded_data_test')
     bld.recurse('test/raw_data_test')
-
+    bld.recurse('test/test_vector_helpers')
+    
     # Build Examples
     bld.recurse('examples/raw_data')
     bld.recurse('examples/coded_data')
+
