@@ -10,7 +10,7 @@ namespace tartarus
 {
 namespace reader
 {
-  nlohmann::json json_reader(std::string file_path)
+  inline nlohmann::json json_reader(std::string file_path)
   {
     nlohmann::json json_data;
 
