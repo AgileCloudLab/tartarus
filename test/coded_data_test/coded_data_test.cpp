@@ -54,7 +54,8 @@ TEST(test_coded_data, test_initialize)
     ASSERT_TRUE(coded.file_id == file_id);
     ASSERT_TRUE(coded.pairs[0].pivot == pivot);
     ASSERT_TRUE(coded.pairs[0].deviation == deviation);
-    
+    ASSERT_TRUE(coded.coding_configuration["generation_size"] == 4);
+    ASSERT_TRUE(coded.coding_configuration["symbol_size"] == 1024);    
 
 }
 
