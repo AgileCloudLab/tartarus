@@ -1,5 +1,7 @@
 #include <tartarus/model/coded_data.hpp>
 
+#include <nlohmann/json.hpp>
+
 #include <gtest/gtest.h>
 
 #include <ctime>
@@ -39,15 +41,21 @@ TEST(test_coded_data, test_initialize)
 
     ASSERT_FALSE(deviation.empty());
 
+    nlohmann::json coding_configuration;
+    coding_configuration["generation_size"] = 4;
+    coding_configuration["symbol_size"] = 1024;
+    
     std::vector<tartarus::model::coded_pair> empty;
     tartarus::model::coded_pair pair = {pivot, deviation};
-    tartarus::model::coded_data coded = {file_id, empty};
+    tartarus::model::coded_data coded = {file_id, coding_configuration, empty};
     coded.pairs.push_back(pair);
     
     // ASSERT that the coded is initialised correct
     ASSERT_TRUE(coded.file_id == file_id);
     ASSERT_TRUE(coded.pairs[0].pivot == pivot);
     ASSERT_TRUE(coded.pairs[0].deviation == deviation);
+    ASSERT_TRUE(coded.coding_configuration["generation_size"] == 4);
+    ASSERT_TRUE(coded.coding_configuration["symbol_size"] == 1024);    
 
 }
 
