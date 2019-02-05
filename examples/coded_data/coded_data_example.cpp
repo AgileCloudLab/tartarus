@@ -36,13 +36,17 @@ int main(void)
         
     std::vector<tartarus::model::coded_pair> empty;
     tartarus::model::coded_pair pair = {pivot, deviation};
-    tartarus::model::coded_data coded = {file_id, coding_configuration, empty};
+    tartarus::model::coded_data coded = {file_id, 1337, "test.txt", "jpg", coding_configuration, empty};
     
     coded.pairs.push_back(pair);
 
     assert(coded.file_id == file_id);
     assert(coded.pairs[0].pivot == pivot);
     assert(coded.pairs[0].deviation == deviation);
-
+    assert(coded.file_size == 1337);
+    assert(coded.file_name == "test.txt");
+    assert(coded.mime_type == "jpg");
+    
+        
     std::cout << "SUCCESS WE REACH THE END OF THE PROGRAM" << std::endl;
 }
