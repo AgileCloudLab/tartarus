@@ -27,7 +27,7 @@ int main(void)
     // Randomly fill data with data
     std::generate(data.begin(), data.end(), rand);
 
-    tartarus::model::raw_data raw = {file_id, data};
+    tartarus::model::raw_data raw = {file_id, data_size, "test.txt", "jpg", data};
 
     assert(raw.file_id == file_id);
     assert(raw.data == data);

@@ -19,16 +19,16 @@ TEST(test_coded_data, test_initialize)
 
     uint64_t file_id = 0;
 
-    uint32_t pivot_size = 1024 * 4;
-    std::vector<uint8_t> pivot(pivot_size);
+    uint32_t base_size = 1024 * 4;
+    std::vector<uint8_t> base(base_size);
 
     // Test that the vector is initialised as expected
-    ASSERT_TRUE(pivot.size() == pivot_size);
-    ASSERT_FALSE(pivot.empty());
+    ASSERT_TRUE(base.size() == base_size);
+    ASSERT_FALSE(base.empty());
 
-    std::generate(pivot.begin(), pivot.end(), rand);
+    std::generate(base.begin(), base.end(), rand);
 
-    ASSERT_FALSE(pivot.empty());
+    ASSERT_FALSE(base.empty());
 
     uint32_t deviation_size = 1024 * 4;
     std::vector<uint8_t> deviation(deviation_size);
@@ -44,18 +44,26 @@ TEST(test_coded_data, test_initialize)
     nlohmann::json coding_configuration;
     coding_configuration["generation_size"] = 4;
     coding_configuration["symbol_size"] = 1024;
+
+    std::string file_name = "test.txt";
+    std::string MIME_TYPE = "png";
+    uint32_t file_size = base.size() * deviation.size();
     
     std::vector<tartarus::model::coded_pair> empty;
-    tartarus::model::coded_pair pair = {pivot, deviation};
-    tartarus::model::coded_data coded = {file_id, coding_configuration, empty};
+    tartarus::model::coded_pair pair = {base, deviation};
+    tartarus::model::coded_data coded = {file_id, file_size, file_name, MIME_TYPE, coding_configuration, empty};
+
     coded.pairs.push_back(pair);
     
     // ASSERT that the coded is initialised correct
-    ASSERT_TRUE(coded.file_id == file_id);
-    ASSERT_TRUE(coded.pairs[0].pivot == pivot);
-    ASSERT_TRUE(coded.pairs[0].deviation == deviation);
-    ASSERT_TRUE(coded.coding_configuration["generation_size"] == 4);
-    ASSERT_TRUE(coded.coding_configuration["symbol_size"] == 1024);    
+    EXPECT_TRUE(coded.file_id == file_id);
+    EXPECT_TRUE(coded.pairs[0].base == base);
+    EXPECT_TRUE(coded.pairs[0].deviation == deviation);
+    EXPECT_TRUE(coded.coding_configuration["generation_size"] == 4);
+    EXPECT_TRUE(coded.coding_configuration["symbol_size"] == 1024);
+    EXPECT_EQ(coded.file_size, file_size);
+    EXPECT_EQ(coded.file_name, file_name);
+    EXPECT_EQ(coded.mime_type, MIME_TYPE);
 
 }
 
