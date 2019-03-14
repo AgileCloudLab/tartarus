@@ -9,7 +9,7 @@
 
 namespace tartarus
 {
-namespace writer
+namespace writers
 {
     /// The function writes a piece of json to the file path provided
     /// @param path is a string representation of the system path to where the file is written

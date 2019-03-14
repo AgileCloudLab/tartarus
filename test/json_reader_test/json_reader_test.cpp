@@ -1,4 +1,4 @@
-#include <tartarus/reader/json_reader.hpp>
+#include <tartarus/readers.hpp>
 
 #include <nlohmann/json.hpp>
 
@@ -12,7 +12,7 @@
 TEST(test_read_json, read_json)
 {
   std::string file_path = "test/files/json/test.json";
-  auto json_data = tartarus::reader::json_reader(file_path);
+  auto json_data = tartarus::readers::json_reader(file_path);
 
   std::string info_string = json_data.value("info", "failure");
 
