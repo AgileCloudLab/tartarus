@@ -28,7 +28,7 @@ namespace readers
     /// The function reads the content of a file and returns it as a vector of uint8_t values
     /// @param path is a std::string representing the path to the file
     /// @return a std::vector<uint8_t> with the data from the file. If an error occures and empty vector is returned     
-    inline std::vector<uint8_t> vector_reader(std::string path)
+    inline std::vector<uint8_t> vector_disk_reader(std::string path)
     {
         std::ifstream instream(path, std::ios::in | std::ios::binary);
         std::vector<uint8_t> data((std::istreambuf_iterator<char>(instream)), std::istreambuf_iterator<char>());

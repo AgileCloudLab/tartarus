@@ -1,0 +1,5 @@
+def build(bld):
+    bld(features = 'cxx cxxprogram',
+        target = 'test_writers_and_readers',
+        source = 'test_writers_and_readers.cpp',
+        use = ['tartarus_includes', 'gtest'])
