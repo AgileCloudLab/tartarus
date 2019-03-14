@@ -26,10 +26,10 @@ namespace writers
     /// @param path is std::string representation of the path to the destination file where the data will be written
     /// @param data is a std::vector<uint8_t> which keeps the data which will be written to disk
     /// @return if the function succeed it returns true otherwise false    
-    inline bool vector_disk_writer(std::string path, std::vector<uint8_t>& data)
+    inline bool vector_disk_writer(const std::string path, const std::vector<uint8_t>& data)
     {
 
-        uint8_t* cdata = data.data();
+        const uint8_t* cdata = data.data();
 
         FILE* fp; // File pointer 
         if((fp=fopen(path.c_str(), "wb"))==NULL) {
