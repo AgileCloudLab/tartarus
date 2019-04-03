@@ -10,7 +10,7 @@ namespace files
     /// @param path is a string that create gives the path to where the file should be created 
     void create_file(std::string path)
     {
-	std::ofstream outfile("./test.txt");
+	std::ofstream outfile(path);
 	outfile.close();         
     }
 }
