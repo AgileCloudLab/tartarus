@@ -1,21 +1,37 @@
 from waflib.Tools.compiler_cxx import cxx_compiler
 from scripts.waf import utils
 
+import sys
+
 APPNAME = 'tartarus'
 VERSION = '1.0.5'
 
 cxx_compiler['linux'] = ['clang++']
 
-def options(opt) :
+def options(opt):
     opt.load('compiler_cxx')
 
 def configure(cnf) :
+    # TODO FIGURE OUT HOW THIS WORKS, cause it is bloody awesome
+    #cnf.check(lib=['cryptopp', 'pqxx', 'pq'])
+    cnf.check
+
     cnf.load('compiler_cxx')
-    cnf.env.append_value('CXXFLAGS', ['-std=c++17', '-Wall', '-Werror', '-Wextra'])
+
+    link_flags = ['-pthread']
+    cxx_flags = ['-g', '-std=c++17', '-Wall', '-Werror', '-Wextra', '-O3']
+    
+    if sys.platform == 'linux' or sys.platform == 'linux2':
+        link_flags.append('-lstdc++fs')
+#        cxx_flags.append('-stdlib=libc++')
+
+    if sys.platform == 'darwin':
+        link_flags.append('-L/usr/local/opt/llvm/lib')
+        cxx_flags.append('-stdlib=libc++')
+        
+    cnf.env.append_value('CXXFLAGS', cxx_flags)        
     cnf.env.append_value('LINKFLAGS',
-                         ['-pthread'])
-
-
+                         link_flags)    
 def build(bld):
     bld(name = 'tartarus_includes',
         includes='./src',
@@ -26,7 +42,9 @@ def build(bld):
     bld.recurse('test/raw_data_test')
     bld.recurse('test/json_reader_test')    
     bld.recurse('test/writers_and_readers')
+    bld.recurse('test/files_test')    
     # Build Examples
     bld.recurse('examples/raw_data')
     bld.recurse('examples/coded_data')
+    bld.recurse('examples/files')    
    

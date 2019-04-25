@@ -1,0 +1,17 @@
+import sys
+
+def build(bld):
+
+    libs = []
+    link_flags = list()
+    if sys.platform == 'linux' or sys.platform == 'linux2':
+        libs.append('stdc++fs')
+
+    if sys.platform == 'darwin':
+        libs.append('c++fs')
+    
+    bld(features = 'cxx cxxprogram',
+        target = 'files_test',
+        source = 'files_test.cpp',
+        lib = libs,
+        use = ['tartarus_includes', 'gtest'])
