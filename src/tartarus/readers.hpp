@@ -10,21 +10,6 @@ namespace tartarus
 {
 namespace readers
 {
-    inline nlohmann::json json_reader(const std::string& file_path)
-    {
-        nlohmann::json json_data;
-
-        std::ifstream input(file_path);
-
-        if(input.fail())
-        {
-            throw std::runtime_error("Unable to open file " + file_path);
-        }
-    
-        input >> json_data;
-        return json_data;
-    }
-
     /// The function reads the content of a file and returns it as a vector of uint8_t values
     /// @param path is a std::string representing the path to the file
     /// @return a std::vector<uint8_t> with the data from the file. If an error occures and empty vector is returned     
@@ -64,6 +49,45 @@ namespace readers
 
     //     return data;
     
-    // }    
+    // }
+    inline nlohmann::json json_reader(const std::string& file_path)
+    {
+        nlohmann::json json_data;
+
+        std::ifstream input(file_path);
+
+        if(input.fail())
+        {
+            throw std::runtime_error("Unable to open file " + file_path);
+        }
+    
+        input >> json_data;
+        return json_data;
+    }
+
+    inline nlohmann::json bjson_reader(std::string path)
+    {
+        std::vector<uint8_t> bdata = vector_disk_reader(path);
+        return nlohmann::json::from_bson(bdata);
+    }
+
+    inline nlohmann::json ubjson_reader(std::string path)
+    {
+        std::vector<uint8_t> ubjson_data = vector_disk_reader(path);
+        return nlohmann::json::from_ubjson(ubjson_data);
+    }        
+
+    inline nlohmann::json cbor_reader(std::string path)
+    {
+        std::vector<uint8_t> cbor_data = vector_disk_reader(path);
+        return nlohmann::json::from_cbor(cbor_data);
+    }
+
+    inline nlohmann::json msgpack_reader(std::string path)
+    {
+        std::vector<uint8_t> msgpack_data = vector_disk_reader(path);
+        return nlohmann::json::from_msgpack(msgpack_data);
+    }
+    
 }
 }
