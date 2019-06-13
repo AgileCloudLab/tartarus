@@ -24,15 +24,17 @@ namespace writers
         FILE* fp; // File pointer 
         if((fp=fopen(path.c_str(), "wb"))==NULL) {
             printf("Cannot open file.\n");
+            return false;
         }
 
+        bool result = true;
         if (fwrite(cdata, sizeof(uint8_t), data.size(), fp) != data.size())
         {
-            return false;
+            result = false;
         }
         fclose(fp);
 
-        return true;
+        return result;
     }
     
     /// The function writes a piece of json to the file path provided
