@@ -23,7 +23,7 @@ namespace writers
 
         FILE* fp; // File pointer 
         if((fp=fopen(path.c_str(), "wb"))==NULL) {
-            printf("Cannot open file.\n");
+            perror(path.c_str());
             return false;
         }
 
