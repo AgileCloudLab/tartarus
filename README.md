@@ -56,6 +56,7 @@ enum file_format
 
 The mapping will then be like this: 
 
+
 | Format     | Integer representation |
 | =======    | ====================== |
 | JSON       | 0                      |
