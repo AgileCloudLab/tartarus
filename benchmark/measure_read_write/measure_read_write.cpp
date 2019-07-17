@@ -46,7 +46,7 @@ void measure_vector_writer_reader()
 
 void measure_json_writer_reader()
 {
-    int data_size = 0;
+    int data_size = 0, data_size_bjson = 0, data_size_ubjson = 0, data_size_cbor = 0, data_size_msgpack = 0;	
     int iterations = 100000; //iterations must be a multiple of num_files
     int num_files = 10;
     
@@ -66,8 +66,6 @@ void measure_json_writer_reader()
 	writer_paths.push_back(path);
     }
 
-    data_size *= (iterations/num_files);
-    
     //JSON reader benchmark
     auto t1 = std::chrono::high_resolution_clock::now();
     for(int i=0; i < iterations/num_files; i++){
@@ -84,7 +82,6 @@ void measure_json_writer_reader()
     t2 = std::chrono::high_resolution_clock::now();
     auto res_write_json = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
 
-    
     //BJSON writer benchmark
     t1 = std::chrono::high_resolution_clock::now();
     for(int i=0; i < iterations/num_files; i++){
@@ -101,6 +98,13 @@ void measure_json_writer_reader()
     t2 = std::chrono::high_resolution_clock::now();
     auto res_read_bjson = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
 
+    //Measure file sizes and clean up
+    for(int i=0; i < num_files; i++)
+    {
+	data_size_bjson += filesize(writer_paths[i].c_str());
+	std::remove(writer_paths[i].c_str());
+    }
+    
     
     //UBJSON writer benchmark
     t1 = std::chrono::high_resolution_clock::now();
@@ -118,6 +122,14 @@ void measure_json_writer_reader()
     t2 = std::chrono::high_resolution_clock::now();
     auto res_read_ubjson = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
 
+    //Measure file sizes and clean up
+    for(int i=0; i < num_files; i++)
+    {
+	data_size_ubjson += filesize(writer_paths[i].c_str());
+	std::remove(writer_paths[i].c_str());
+    }
+    
+    
     //CBOR writer benchmark
     t1 = std::chrono::high_resolution_clock::now();
     for(int i=0; i < iterations/num_files; i++){
@@ -134,6 +146,14 @@ void measure_json_writer_reader()
     t2 = std::chrono::high_resolution_clock::now();
     auto res_read_cbor = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
 
+    //Measure file sizes and clean up
+    for(int i=0; i < num_files; i++)
+    {
+	data_size_cbor += filesize(writer_paths[i].c_str());
+	std::remove(writer_paths[i].c_str());
+    }
+    
+
     //MSGPACK writer benchmark
     t1 = std::chrono::high_resolution_clock::now();
     for(int i=0; i < iterations/num_files; i++){
@@ -142,35 +162,38 @@ void measure_json_writer_reader()
     t2 = std::chrono::high_resolution_clock::now();
     auto res_write_msgpack = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
 
-    //BJSON reader benchmark
+    //MSGPACK reader benchmark
     t1 = std::chrono::high_resolution_clock::now();
     for(int i=0; i < iterations/num_files; i++){
 	objects[i % num_files] = tartarus::readers::msgpack_reader(writer_paths[i % num_files]);
     }
     t2 = std::chrono::high_resolution_clock::now();
     auto res_read_msgpack = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
-    
 
-    std::cout<<"JSON results based on " << iterations/num_files << " iterations over "
-	     << num_files << " files of average size: " << data_size / iterations
-	     << " bytes, for a total of " << data_size << " bytes." << std::endl;
-    
-    std::cout<<"JSON writer throughput " << data_size / double(res_write_json.count()) << "MB/s" << std::endl;
-    std::cout<<"JSON reader throughput " << data_size / double(res_read_json.count()) << "MB/s" << std::endl;
-    std::cout<<"BSON writer throughput " << data_size / double(res_write_bjson.count()) << "MB/s" << std::endl;
-    std::cout<<"BSON reader throughput " << data_size / double(res_read_bjson.count()) << "MB/s" << std::endl;
-    std::cout<<"UBJSON writer throughput " << data_size / double(res_write_ubjson.count()) << "MB/s" << std::endl;
-    std::cout<<"UBJSON reader throughput " << data_size / double(res_read_ubjson.count()) << "MB/s" << std::endl;
-    std::cout<<"CBOR writer throughput " << data_size / double(res_write_cbor.count()) << "MB/s" << std::endl;
-    std::cout<<"CBOR reader throughput " << data_size / double(res_read_cbor.count()) << "MB/s" << std::endl;
-    std::cout<<"MSGPACK writer throughput " << data_size / double(res_write_msgpack.count()) << "MB/s" << std::endl;
-    std::cout<<"MSGPACK reader throughput " << data_size / double(res_read_msgpack.count()) << "MB/s" << std::endl;
-
-    //Delete files
+    //Measure file sizes and clean up
     for(int i=0; i < num_files; i++)
     {
+	data_size_msgpack += filesize(writer_paths[i].c_str());
 	std::remove(writer_paths[i].c_str());
     }
+
+    int fact = iterations/num_files; //The number of iterations each file is read/written
+    
+    std::cout<<"JSON results based on " << iterations/num_files << " iterations over "
+	     << num_files << " files of average size for: " << data_size / double(num_files)
+	     << " bytes, for a total of " << fact * data_size << " bytes." << std::endl;
+    std::cout<<"Throughput calculated based on file sizes on disk, which varies for each format." << std::endl;
+    
+    std::cout<<"JSON writer throughput " << data_size * fact / double(res_write_json.count()) << "MB/s" << std::endl;
+    std::cout<<"JSON reader throughput " << data_size * fact/ double(res_read_json.count()) << "MB/s" << std::endl;
+    std::cout<<"BSON writer throughput " << data_size_bjson * fact / double(res_write_bjson.count()) << "MB/s" << std::endl;
+    std::cout<<"BSON reader throughput " << data_size_bjson * fact / double(res_read_bjson.count()) << "MB/s" << std::endl;
+    std::cout<<"UBJSON writer throughput " << data_size_ubjson * fact / double(res_write_ubjson.count()) << "MB/s" << std::endl;
+    std::cout<<"UBJSON reader throughput " << data_size_ubjson * fact / double(res_read_ubjson.count()) << "MB/s" << std::endl;
+    std::cout<<"CBOR writer throughput " << data_size_cbor * fact / double(res_write_cbor.count()) << "MB/s" << std::endl;
+    std::cout<<"CBOR reader throughput " << data_size_cbor * fact / double(res_read_cbor.count()) << "MB/s" << std::endl;
+    std::cout<<"MSGPACK writer throughput " << data_size_msgpack * fact / double(res_write_msgpack.count()) << "MB/s" << std::endl;
+    std::cout<<"MSGPACK reader throughput " << data_size_msgpack * fact / double(res_read_msgpack.count()) << "MB/s" << std::endl;
 }
 
 int main(void)
