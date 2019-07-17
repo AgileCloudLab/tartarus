@@ -68,30 +68,103 @@ void measure_json_writer_reader()
 
     data_size *= (iterations/num_files);
     
-    //Reader benchmark
+    //JSON reader benchmark
     auto t1 = std::chrono::high_resolution_clock::now();
     for(int i=0; i < iterations/num_files; i++){
 	objects[i % num_files] = tartarus::readers::json_reader(reader_paths[i % num_files]);
     }
     auto t2 = std::chrono::high_resolution_clock::now();
-    auto res_read = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+    auto res_read_json = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
 
-    
-    //Writer benchmark
+    //JSON writer benchmark
     t1 = std::chrono::high_resolution_clock::now();
     for(int i=0; i < iterations/num_files; i++){
-	tartarus::writers::json_writer(reader_paths[i % num_files], objects[i % num_files]);
+	tartarus::writers::json_writer(writer_paths[i % num_files], objects[i % num_files]);
     }
     t2 = std::chrono::high_resolution_clock::now();
-    auto res_write = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+    auto res_write_json = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+
+    
+    //BJSON writer benchmark
+    t1 = std::chrono::high_resolution_clock::now();
+    for(int i=0; i < iterations/num_files; i++){
+	tartarus::writers::bjson_writer(writer_paths[i % num_files], objects[i % num_files]);
+    }
+    t2 = std::chrono::high_resolution_clock::now();
+    auto res_write_bjson = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+
+    //BJSON reader benchmark
+    t1 = std::chrono::high_resolution_clock::now();
+    for(int i=0; i < iterations/num_files; i++){
+	objects[i % num_files] = tartarus::readers::bjson_reader(writer_paths[i % num_files]);
+    }
+    t2 = std::chrono::high_resolution_clock::now();
+    auto res_read_bjson = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+
+    
+    //UBJSON writer benchmark
+    t1 = std::chrono::high_resolution_clock::now();
+    for(int i=0; i < iterations/num_files; i++){
+	tartarus::writers::ubjson_writer(writer_paths[i % num_files], objects[i % num_files]);
+    }
+    t2 = std::chrono::high_resolution_clock::now();
+    auto res_write_ubjson = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+
+    //UBJSON reader benchmark
+    t1 = std::chrono::high_resolution_clock::now();
+    for(int i=0; i < iterations/num_files; i++){
+	objects[i % num_files] = tartarus::readers::ubjson_reader(writer_paths[i % num_files]);
+    }
+    t2 = std::chrono::high_resolution_clock::now();
+    auto res_read_ubjson = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+
+    //CBOR writer benchmark
+    t1 = std::chrono::high_resolution_clock::now();
+    for(int i=0; i < iterations/num_files; i++){
+	tartarus::writers::cbor_writer(writer_paths[i % num_files], objects[i % num_files]);
+    }
+    t2 = std::chrono::high_resolution_clock::now();
+    auto res_write_cbor = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+
+    //CBOR reader benchmark
+    t1 = std::chrono::high_resolution_clock::now();
+    for(int i=0; i < iterations/num_files; i++){
+	objects[i % num_files] = tartarus::readers::cbor_reader(writer_paths[i % num_files]);
+    }
+    t2 = std::chrono::high_resolution_clock::now();
+    auto res_read_cbor = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+
+    //MSGPACK writer benchmark
+    t1 = std::chrono::high_resolution_clock::now();
+    for(int i=0; i < iterations/num_files; i++){
+	tartarus::writers::msgpack_writer(writer_paths[i % num_files], objects[i % num_files]);
+    }
+    t2 = std::chrono::high_resolution_clock::now();
+    auto res_write_msgpack = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+
+    //BJSON reader benchmark
+    t1 = std::chrono::high_resolution_clock::now();
+    for(int i=0; i < iterations/num_files; i++){
+	objects[i % num_files] = tartarus::readers::msgpack_reader(writer_paths[i % num_files]);
+    }
+    t2 = std::chrono::high_resolution_clock::now();
+    auto res_read_msgpack = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+    
 
     std::cout<<"JSON results based on " << iterations/num_files << " iterations over "
 	     << num_files << " files of average size: " << data_size / iterations
 	     << " bytes, for a total of " << data_size << " bytes." << std::endl;
     
-    std::cout<<"JSON writer throughput " << data_size / double(res_write.count()) << "MB/s" << std::endl;
-
-    std::cout<<"JSON reader throughput " << data_size / double(res_read.count()) << "MB/s" << std::endl;
+    std::cout<<"JSON writer throughput " << data_size / double(res_write_json.count()) << "MB/s" << std::endl;
+    std::cout<<"JSON reader throughput " << data_size / double(res_read_json.count()) << "MB/s" << std::endl;
+    std::cout<<"BSON writer throughput " << data_size / double(res_write_bjson.count()) << "MB/s" << std::endl;
+    std::cout<<"BSON reader throughput " << data_size / double(res_read_bjson.count()) << "MB/s" << std::endl;
+    std::cout<<"UBJSON writer throughput " << data_size / double(res_write_ubjson.count()) << "MB/s" << std::endl;
+    std::cout<<"UBJSON reader throughput " << data_size / double(res_read_ubjson.count()) << "MB/s" << std::endl;
+    std::cout<<"CBOR writer throughput " << data_size / double(res_write_cbor.count()) << "MB/s" << std::endl;
+    std::cout<<"CBOR reader throughput " << data_size / double(res_read_cbor.count()) << "MB/s" << std::endl;
+    std::cout<<"MSGPACK writer throughput " << data_size / double(res_write_msgpack.count()) << "MB/s" << std::endl;
+    std::cout<<"MSGPACK reader throughput " << data_size / double(res_read_msgpack.count()) << "MB/s" << std::endl;
 
     //Delete files
     for(int i=0; i < num_files; i++)
