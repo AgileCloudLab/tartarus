@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+# encoding: utf-8
 from waflib.Tools.compiler_cxx import cxx_compiler
 from scripts.waf import utils
 
@@ -48,3 +50,5 @@ def build(bld):
     bld.recurse('examples/coded_data')
     bld.recurse('examples/files')    
    
+    # Build Benchmark
+    bld.recurse('benchmark/measure_read_write')
