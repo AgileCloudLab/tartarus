@@ -7,7 +7,6 @@
 #include <stdexcept>
 
 
-
 namespace tartarus
 {
 namespace readers
@@ -42,7 +41,8 @@ namespace readers
         }
 
         std::vector<uint8_t> data(cdata, cdata + file_size);
-
+	fclose(fptr);
+	
         return data;
     }    
 
