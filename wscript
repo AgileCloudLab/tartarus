@@ -21,11 +21,10 @@ def configure(cnf) :
     cnf.load('compiler_cxx')
 
     link_flags = ['-pthread']
-    cxx_flags = ['-g', '-std=c++17', '-Wall', '-Werror', '-Wextra', '-O3']
+    cxx_flags = ['-std=c++17', '-Wall', '-Werror', '-Wextra', '-O3']
     
     if sys.platform == 'linux' or sys.platform == 'linux2':
         link_flags.append('-lstdc++fs')
-#        cxx_flags.append('-stdlib=libc++')
 
     if sys.platform == 'darwin':
         link_flags.append('-L/usr/local/opt/llvm/lib')
@@ -35,9 +34,18 @@ def configure(cnf) :
     cnf.env.append_value('LINKFLAGS',
                          link_flags)    
 def build(bld):
+
     bld(name = 'tartarus_includes',
         includes='./src',
         export_includes='./src')
+
+    bld.stlib(name = 'tartarus',
+        features = 'cxx cxxstlib',
+        target='tartarus',
+        includes='../src',
+        source=bld.path.ant_glob('src/tartarus/**/*.cpp'),
+        use=['tartarus_includes']
+    )    
 
     # Build Test
     bld.recurse('test/coded_data_test')

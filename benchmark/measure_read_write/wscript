@@ -4,16 +4,18 @@ import sys
 
 def build(bld):
 
+    libs = []
+    
+    if sys.platform == 'linux' or sys.platform == 'linux2':
+        libs.append('stdc++fs')
 
-#    if sys.platform == 'linux' or sys.platform == 'linux2':
-#        libs.append('stdc++fs')
-#
-#    if sys.platform == 'darwin':
-#        libs.append('c++fs')
+    if sys.platform == 'darwin':
+        libs.append('c++fs')
         
         
     bld(features = 'cxx cxxprogram',
         target = 'measure_read_write',
         source = 'measure_read_write.cpp',
-        use = ['tartarus_includes']
+        lib = libs,
+        use = ['tartarus_includes', 'tartarus']
     )

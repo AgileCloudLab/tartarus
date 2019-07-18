@@ -14,4 +14,4 @@ def build(bld):
         target = 'files_test',
         source = 'files_test.cpp',
         lib = libs,
-        use = ['tartarus_includes', 'gtest'])
+        use = ['tartarus_includes', 'tartarus', 'gtest'])

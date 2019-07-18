@@ -1,6 +1,17 @@
+import sys
+
 def build(bld):
+
+    libs = []
+    
+    if sys.platform == 'linux' or sys.platform == 'linux2':
+        libs.append('stdc++fs')
+
+    if sys.platform == 'darwin':
+        libs.append('c++fs')
+        
     bld(features = 'cxx cxxprogram',
         target = 'coded_data_test',
         source = 'coded_data_test.cpp',
         libpath=['lib'],
-        use = ['tartarus_includes', 'gtest'])
+        use = ['tartarus_includes', 'tartarus', 'gtest'])
