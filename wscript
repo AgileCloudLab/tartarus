@@ -47,6 +47,14 @@ def build(bld):
         use=['tartarus_includes']
     )    
 
+    bld.stlib(name = 'tartarus',
+        features = 'cxx',
+        target='tartarus_shared',
+        includes='../src',
+        source=bld.path.ant_glob('src/tartarus/**/*.cpp'),
+        use=['tartarus_includes']
+    )    
+    
     # Build Test
     bld.recurse('test/coded_data_test')
     bld.recurse('test/raw_data_test')
