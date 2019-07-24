@@ -47,7 +47,7 @@ def build(bld):
         use=['tartarus_includes']
     )    
 
-    bld.stlib(name = 'tartarus',
+    bld.shlib(name = 'tartarus',
         features = 'cxx',
         target='tartarus_shared',
         includes='../src',
