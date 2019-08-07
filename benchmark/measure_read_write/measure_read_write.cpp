@@ -7,37 +7,52 @@
 #include <iostream>
 #include <fstream>
 
+#include <algorithm>
+#include <ctime>
+
 std::ifstream::pos_type filesize(const char* filename)
 {
     std::ifstream in(filename, std::ifstream::ate | std::ifstream::binary);
     return in.tellg(); 
 }
 
-void measure_vector_writer_reader()
+void measure_vector_writer_reader(size_t data_size)
 {
     std::string path = "vector_test.bin";
-    int data_size = 1000000000; //1000 MB
+    // int data_size = 1000000000; //1000 MB
+//    int data_size = 32000;
     std::vector<uint8_t> data(data_size);
 
     srand(static_cast<uint32_t>(time(0)));
+    std::generate(data.begin(), data.end(), rand);
 
+    uint32_t iterations = 10000;
+    
     // Write benchmark
-    auto t1 = std::chrono::high_resolution_clock::now();
-    tartarus::writers::vector_disk_writer(path, data);
+    auto t1 = std::chrono::high_resolution_clock::now();    
+    for (uint32_t i = 0; i < iterations; ++i)
+    {
+
+        tartarus::writers::vector_disk_writer(path, data);
+    }
     auto t2 = std::chrono::high_resolution_clock::now();
     auto res = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
 
     std::cout<<"Vector writer throughput for " << data_size <<
-	" bytes: " << data_size / double(res.count()) << "MB/s" << std::endl;;
+	" bytes: " << (data_size * iterations) / double(res.count()) << "MB/s" << std::endl;;
 
     //Read benchmark
-    t1 = std::chrono::high_resolution_clock::now();
-    std::vector<uint8_t> result = tartarus::readers::vector_disk_reader(path);
+    t1 = std::chrono::high_resolution_clock::now();    
+    for (uint32_t i = 0; i < iterations; ++i)
+    {    
+
+        std::vector<uint8_t> result = tartarus::readers::vector_disk_reader(path);
+    }
     t2 = std::chrono::high_resolution_clock::now();
     res = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
 
     std::cout<<"Vector reader throughput for " << data_size <<
-	" bytes: " << data_size / double(res.count()) << "MB/s" << std::endl;
+	" bytes: " << (data_size * iterations) / double(res.count()) << "MB/s" << std::endl;
 
     //Delete file
     std::remove(path.c_str());
@@ -199,7 +214,14 @@ void measure_json_writer_reader()
 int main(void)
 {
     std::cout << "Note: benchmark must be run from project's root directory!" <<std::endl;
-    measure_vector_writer_reader();
+    measure_vector_writer_reader(4096);
+    measure_vector_writer_reader(8192);
+    measure_vector_writer_reader(16384);
+    measure_vector_writer_reader(32768);
+    measure_vector_writer_reader(65536);
+    measure_vector_writer_reader(131072);        
+    
+
     measure_json_writer_reader();
     return 0;
 }
