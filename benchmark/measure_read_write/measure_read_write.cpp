@@ -16,24 +16,36 @@ std::ifstream::pos_type filesize(const char* filename)
     return in.tellg(); 
 }
 
+std::vector<std::vector<uint8_t>> generate_data(uint32_t iterations, size_t data_size)
+{
+    srand(static_cast<uint32_t>(time(0)));
+    std::vector<std::vector<uint8_t>> rdata;
+
+    for (uint32_t i = 0; i < iterations; ++i)
+    {
+
+        std::vector<uint8_t> data(data_size);
+        std::generate(data.begin(), data.end(), rand);
+        rdata.push_back(data);
+    }
+    return rdata;
+}
+
 void measure_vector_writer_reader(size_t data_size)
 {
-    std::string path = "vector_test.bin";
+    std::string path = "bench_out/vector_test_";
+    uint32_t iterations = 100000;
     // int data_size = 1000000000; //1000 MB
 //    int data_size = 32000;
-    std::vector<uint8_t> data(data_size);
+    std::vector<std::vector<uint8_t>> data = generate_data(iterations, data_size);
 
-    srand(static_cast<uint32_t>(time(0)));
-    std::generate(data.begin(), data.end(), rand);
-
-    uint32_t iterations = 10000;
     
     // Write benchmark
     auto t1 = std::chrono::high_resolution_clock::now();    
     for (uint32_t i = 0; i < iterations; ++i)
     {
-
-        tartarus::writers::vector_disk_writer(path, data);
+        std::string tpath = path + std::to_string(i) + ".bin";
+        tartarus::writers::vector_disk_writer(tpath, data[i]);
     }
     auto t2 = std::chrono::high_resolution_clock::now();
     auto res = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
@@ -45,8 +57,8 @@ void measure_vector_writer_reader(size_t data_size)
     t1 = std::chrono::high_resolution_clock::now();    
     for (uint32_t i = 0; i < iterations; ++i)
     {    
-
-        std::vector<uint8_t> result = tartarus::readers::vector_disk_reader(path);
+        std::string tpath = path + std::to_string(i) + ".bin";
+        std::vector<uint8_t> result = tartarus::readers::vector_disk_reader(tpath);
     }
     t2 = std::chrono::high_resolution_clock::now();
     res = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
