@@ -33,14 +33,16 @@ namespace readers
         // get file size in bytes
         uint32_t file_size = std::filesystem::file_size(path); 
 
-        uint8_t* cdata = (uint8_t*) malloc(file_size);
+        uint8_t* cdata = new uint8_t[file_size];
 
         if(fread(cdata, sizeof(uint8_t), file_size, fptr) != file_size)
         {
+	    delete[] cdata;
             throw std::runtime_error("could not read the file");
         }
 
         std::vector<uint8_t> data(cdata, cdata + file_size);
+	delete[] cdata;
 	fclose(fptr);
 	
         return data;
@@ -91,25 +93,25 @@ namespace readers
         return json_data;
     }
 
-    nlohmann::json bjson_reader(std::string path)
+    nlohmann::json bjson_reader(const std::string& path)
     {
         std::vector<uint8_t> bdata = vector_disk_reader(path);
         return nlohmann::json::from_bson(bdata);
     }
 
-    nlohmann::json ubjson_reader(std::string path)
+    nlohmann::json ubjson_reader(const std::string& path)
     {
         std::vector<uint8_t> ubjson_data = vector_disk_reader(path);
         return nlohmann::json::from_ubjson(ubjson_data);
     }        
 
-    nlohmann::json cbor_reader(std::string path)
+    nlohmann::json cbor_reader(const std::string& path)
     {
         std::vector<uint8_t> cbor_data = vector_disk_reader(path);
         return nlohmann::json::from_cbor(cbor_data);
     }
 
-    nlohmann::json msgpack_reader(std::string path)
+    nlohmann::json msgpack_reader(const std::string& path)
     {
         std::vector<uint8_t> msgpack_data = vector_disk_reader(path);
         return nlohmann::json::from_msgpack(msgpack_data);

@@ -19,20 +19,20 @@ namespace writers
     /// @param path is std::string representation of the path to the destination file where the data will be written
     /// @param data is a std::vector<uint8_t> which keeps the data which will be written to disk
     /// @return if the function succeed it returns true otherwise false    
-    bool vector_disk_writer(const std::string path, const std::vector<uint8_t>& data);
+    bool vector_disk_writer(const std::string& path, const std::vector<uint8_t>& data);
     
     /// The function writes a piece of json to the file path provided
     /// @param path is a string representation of the system path to where the file is written
     /// @param data is a json object 
-    void json_writer(std::string path, nlohmann::json data);
+    void json_writer(const std::string& path, const nlohmann::json& data);
 
-    void bjson_writer(std::string path, nlohmann::json data);    
+    void bjson_writer(const std::string& path, const nlohmann::json& data);    
 
-    void ubjson_writer(std::string path, nlohmann::json data);
+    void ubjson_writer(const std::string& path, const nlohmann::json& data);
 
-    void cbor_writer(std::string path, nlohmann::json data);
+    void cbor_writer(const std::string& path, const nlohmann::json& data);
     
-    void msgpack_writer(std::string path, nlohmann::json data);
+    void msgpack_writer(const std::string& path, const nlohmann::json& data);
 }
 }
 

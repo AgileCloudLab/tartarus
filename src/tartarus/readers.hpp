@@ -16,13 +16,13 @@ namespace readers
     
     nlohmann::json json_reader(const std::string& file_path);
 
-    nlohmann::json bjson_reader(std::string path);
+    nlohmann::json bjson_reader(const std::string& path);
 
-    nlohmann::json ubjson_reader(std::string path);
+    nlohmann::json ubjson_reader(const std::string& path);
         
-    nlohmann::json cbor_reader(std::string path);
+    nlohmann::json cbor_reader(const std::string& path);
     
-    nlohmann::json msgpack_reader(std::string path);
+    nlohmann::json msgpack_reader(const std::string& path);
     
 }
 }
