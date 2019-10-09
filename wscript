@@ -27,7 +27,8 @@ def configure(cnf) :
         link_flags.append('-lstdc++fs')
 
     if sys.platform == 'darwin':
-        link_flags.append('-L/usr/local/opt/llvm/lib')
+        cxx_flags.append('-isysroot/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk')
+        cxx_flags.append('-I/usr/local/include')
         cxx_flags.append('-stdlib=libc++')
         
     cnf.env.append_value('CXXFLAGS', cxx_flags)        
@@ -47,13 +48,13 @@ def build(bld):
         use=['tartarus_includes']
     )    
 
-    bld.shlib(name = 'tartarus_shared',
-        features = 'cxx',
-        target='tartarus_shared',
-        includes='../src',
-        source=bld.path.ant_glob('src/tartarus/**/*.cpp'),
-        use=['tartarus_includes']
-    )    
+    # bld.shlib(name = 'tartarus_shared',
+    #     features = 'cxx',
+    #     target='tartarus_shared',
+    #     includes='../src',
+    #     source=bld.path.ant_glob('src/tartarus/**/*.cpp'),
+    #     use=['tartarus_includes']
+    # )    
     
     # Build Test
     bld.recurse('test/coded_data_test')
