@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TARTARUS_MODEL_RAW_DATA_H
+#define TARTARUS_MODEL_RAW_DATA_H
 
 #include <cstdint>
 #include <string>
@@ -20,3 +21,4 @@ struct raw_data {
 };
 }
 }
+#endif /* TARTARUS_MODEL_RAW_DATA_H */

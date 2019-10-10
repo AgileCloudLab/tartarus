@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TARTARUS_FILES_H
+#define TARTARUS_FILES_H
 
 #include <fstream>
 #include <string>
@@ -24,9 +25,14 @@ namespace files
         return (size_t)in.tellg(); 
     }
 
+    /// Get the extension of the file at the given path
+    /// @param File path for the file you want the extension of
+    /// @return extension of a file
     std::string extension(const std::string& path)
     {
         return (((std::filesystem::path(path)).extension()).string()).substr(1);
     }
 }
 }
+
+#endif /* TARTARUS_FILES_H */

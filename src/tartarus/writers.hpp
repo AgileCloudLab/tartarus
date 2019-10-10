@@ -1,7 +1,6 @@
 #ifndef TARTARUS_WRITERS_H
 #define TARTARUS_WRITERS_H
 
-
 #include <nlohmann/json.hpp>
 
 #include <string>
@@ -26,12 +25,24 @@ namespace writers
     /// @param data is a json object 
     void json_writer(const std::string& path, const nlohmann::json& data);
 
+    /// The function converts a JSON object to BSON and writes it to a file on disk
+    /// @param path is a string representation of the system path to where the file is written
+    /// @param data is a json object     
     void bjson_writer(const std::string& path, const nlohmann::json& data);    
 
+    /// The function converts a JSON object to UBSON and writes it to a file on disk
+    /// @param path is a string representation of the system path to where the file is written
+    /// @param data is a json object         
     void ubjson_writer(const std::string& path, const nlohmann::json& data);
 
+    /// The function converts a JSON object to CBOR and writes it to a file on disk
+    /// @param path is a string representation of the system path to where the file is written
+    /// @param data is a json object         
     void cbor_writer(const std::string& path, const nlohmann::json& data);
-    
+
+    /// The function converts a JSON object to MSG_PACK and writes it to a file on disk
+    /// @param path is a string representation of the system path to where the file is written
+    /// @param data is a json object         
     void msgpack_writer(const std::string& path, const nlohmann::json& data);
 }
 }

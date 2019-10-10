@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TARTARUS_MODEL_CODE_PAIR_H
+#define TARTARUS_MODEL_CODE_PAIR_H
 
 #include <cstdint>
 #include <vector> 
@@ -13,3 +14,5 @@ struct coded_pair {
 };
 }
 }
+
+#endif /* TARTARUS_MODEL_CODE_PAIR_H */

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TARTARUS_MODEL_CODE_DATA_H
+#define TARTARUS_MODEL_CODE_DATA_H
 
 #include "coded_pair.hpp"
 
@@ -26,3 +27,5 @@ struct coded_data {
 };
 }
 }
+
+#endif /* TARTARUS_MODEL_CODE_DATA_H */ 

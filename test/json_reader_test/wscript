@@ -7,9 +7,6 @@ def build(bld):
     if sys.platform == 'linux' or sys.platform == 'linux2':
         libs.append('stdc++fs')
 
-#    if sys.platform == 'darwin':
-#        libs.append('c++fs')
-
     bld(features = 'cxx cxxprogram',
         target = 'json_reader_test',
         source = 'json_reader_test.cpp',
