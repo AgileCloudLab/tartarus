@@ -10,13 +10,14 @@ VERSION = '1.0.5'
 
 cxx_compiler['linux'] = ['clang++']
 
+
+
 def options(opt):
     opt.load('compiler_cxx')
 
 def configure(cnf) :
     # TODO FIGURE OUT HOW THIS WORKS, cause it is bloody awesome
     #cnf.check(lib=['cryptopp', 'pqxx', 'pq'])
-    cnf.check
 
     cnf.load('compiler_cxx')
 
@@ -30,6 +31,10 @@ def configure(cnf) :
         cxx_flags.append('-isysroot/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk')
         cxx_flags.append('-I/usr/local/include')
         cxx_flags.append('-stdlib=libc++')
+        import platform
+        macos_ver = platform.mac_ver()[0]
+        if not macos_ver.startswith('10.15'):
+            link_flags.append('-lc++fs')
         
     cnf.env.append_value('CXXFLAGS', cxx_flags)        
     cnf.env.append_value('LINKFLAGS',
