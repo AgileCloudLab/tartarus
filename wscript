@@ -28,14 +28,18 @@ def configure(cnf) :
         link_flags.append('-lstdc++fs')
 
     if sys.platform == 'darwin':
-        cxx_flags.append('-isysroot/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk')
-        cxx_flags.append('-I/usr/local/include')
+
         cxx_flags.append('-stdlib=libc++')
         import platform
         macos_ver = platform.mac_ver()[0]
         if not macos_ver.startswith('10.15'):
             link_flags.append('-lc++fs')
-        
+            link_flags.append('-L/usr/local/opt/llvm/lib')
+            cxx_flags.append('-I/usr/local/opt/llvm/include')            
+        else:
+            cxx_flags.append('-isysroot/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk')
+            cxx_flags.append('-I/usr/local/include')
+            
     cnf.env.append_value('CXXFLAGS', cxx_flags)        
     cnf.env.append_value('LINKFLAGS',
                          link_flags)    
