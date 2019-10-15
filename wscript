@@ -4,6 +4,7 @@ from waflib.Tools.compiler_cxx import cxx_compiler
 from scripts.waf import utils
 
 import sys
+import os
 
 APPNAME = 'tartarus'
 VERSION = '1.0.5'
@@ -47,6 +48,7 @@ def build(bld):
 
     bld(name = 'tartarus_includes',
         includes='./src',
+        use=['json_includes'],        
         export_includes='./src')
 
     bld.stlib(name = 'tartarus',
