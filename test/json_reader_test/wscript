@@ -11,4 +11,4 @@ def build(bld):
         target = 'json_reader_test',
         source = 'json_reader_test.cpp',
         lib = libs, 
-        use = ['tartarus_includes', 'tartarus', 'gtest'])
+        use = ['json_includes', 'tartarus_includes', 'tartarus', 'gtest'])

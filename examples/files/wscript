@@ -14,4 +14,4 @@ def build(bld):
         target = 'files',
         source = 'files.cpp',
         lib = libs,
-        use = ['tartarus_includes'])
+        use = ['json_includes', 'tartarus_includes'])

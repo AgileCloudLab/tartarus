@@ -5,5 +5,13 @@
         "method": "semver",
         "major": 1,
         "sources": ["github.com/AgileCloudLab/gtest.git"]
-    }
+    },
+    {
+        "name": "json",
+        "resolver": "git",
+        "method": "semver",
+        "major": 3,
+        "sources": ["github.com/AgileCloudLab/json.git"]
+    }    
+    
 ]

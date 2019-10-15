@@ -2,4 +2,4 @@ def build(bld):
     bld(features = 'cxx cxxprogram',
         target = 'coded_data_example',
         source = 'coded_data_example.cpp',
-        use = ['tartarus_includes'])
+        use = ['json_includes', 'tartarus_includes'])

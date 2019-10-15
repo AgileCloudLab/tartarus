@@ -11,4 +11,4 @@ def build(bld):
         target = 'test_writers_and_readers',
         source = 'test_writers_and_readers.cpp',
         lib = libs, 
-        use = ['tartarus_includes', 'tartarus', 'gtest'])
+        use = ['json_includes', 'tartarus_includes', 'tartarus', 'gtest'])

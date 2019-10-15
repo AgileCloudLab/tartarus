@@ -54,7 +54,7 @@ def build(bld):
         target='tartarus',
         includes='../src',
         source=bld.path.ant_glob('src/tartarus/**/*.cpp'),
-        use=['tartarus_includes']
+        use=['json_includes', 'tartarus_includes']
     )    
 
     
