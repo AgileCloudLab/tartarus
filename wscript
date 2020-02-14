@@ -16,34 +16,31 @@ cxx_compiler['linux'] = ['clang++']
 def options(opt):
     opt.load('compiler_cxx')
 
-def configure(cnf) :
+def configure(ctx) :
     # TODO FIGURE OUT HOW THIS WORKS, cause it is bloody awesome
     #cnf.check(lib=['cryptopp', 'pqxx', 'pq'])
 
-    cnf.load('compiler_cxx')
-
-    link_flags = ['-pthread']
-    cxx_flags = ['-std=c++17', '-Wall', '-Werror', '-Wextra', '-O3']
+    ctx.load('compiler_cxx')
+    ctx.env.append_value('CXXFLAGS', ['-std=c++17', '-Wall', '-Werror', '-Wextra', '-O3'])    
     
     if sys.platform == 'linux' or sys.platform == 'linux2':
         link_flags.append('-lstdc++fs')
 
     if sys.platform == 'darwin':
 
-        cxx_flags.append('-stdlib=libc++')
+        ctx.env.append_value('CXXFLAGS', '-stdlib=libc++')
+        ctx.env.append_value('CXXFLAGS', '-isysroot/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk')
         import platform
         macos_ver = platform.mac_ver()[0]
         if not macos_ver.startswith('10.15'):
-            link_flags.append('-lc++fs')
-            link_flags.append('-L/usr/local/opt/llvm/lib')
-            cxx_flags.append('-I/usr/local/opt/llvm/include')            
+            ctx.env.append_value('CXXFLAGS', '-I/usr/local/opt/llvm/include')            
+            ctx.env.append_value('LINKFLAGS', '-L/usr/local/opt/llvm/lib')
+
         else:
-            cxx_flags.append('-isysroot/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk')
-            cxx_flags.append('-I/usr/local/include')
-            
-    cnf.env.append_value('CXXFLAGS', cxx_flags)        
-    cnf.env.append_value('LINKFLAGS',
-                         link_flags)    
+            ctx.env.append_value('CXXFLAGS', '-I/usr/local/include')
+
+    ctx.env.append_value('LINKFLAGS', '-pthread')            
+
 def build(bld):
 
     bld(name = 'tartarus_includes',
