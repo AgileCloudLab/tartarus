@@ -24,7 +24,7 @@ def configure(ctx) :
     ctx.env.append_value('CXXFLAGS', ['-std=c++17', '-Wall', '-Werror', '-Wextra', '-O3'])    
     
     if sys.platform == 'linux' or sys.platform == 'linux2':
-        link_flags.append('-lstdc++fs')
+        ctx.env.append_value('LINKFLAGS', '-lstdc++fs')
 
     if sys.platform == 'darwin':
 
