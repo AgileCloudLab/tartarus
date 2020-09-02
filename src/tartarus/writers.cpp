@@ -1,11 +1,33 @@
 #include "writers.hpp"
 
+#include <unistd.h>
+
 namespace tartarus
 {
 namespace writers
 {
 
-    FILE* vector_disk_writer(const std::string& path, const std::vector<uint8_t>& data)
+    bool vector_disk_writer(const std::string& path, const std::vector<uint8_t>& data)
+    {
+
+        FILE* fp; // File pointer 
+        if((fp=fopen(path.c_str(), "wb"))==NULL)
+        {
+            perror(path.c_str());
+            return false;
+        }
+
+        bool result = true;
+        if (fwrite(data.data(), sizeof(uint8_t), data.size(), fp) != data.size())
+        {
+            result = false;
+        }
+        fclose(fp);
+
+        return result;
+    }    
+
+    bool vector_disk_writer(const std::string& path, const std::vector<uint8_t>& data, bool sync)
     {
 
         FILE* fp; // File pointer 
@@ -18,6 +40,10 @@ namespace writers
         if (fwrite(data.data(), sizeof(uint8_t), data.size(), fp) != data.size())
         {
             return fp;
+        }
+        if (sync)
+        {
+            fsync(fileno(fp));
         }
         fclose(fp);
 
