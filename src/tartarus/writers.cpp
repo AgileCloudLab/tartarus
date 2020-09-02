@@ -1,30 +1,27 @@
 #include "writers.hpp"
 
-#include <fstream>
-
 namespace tartarus
 {
 namespace writers
 {
 
-    bool vector_disk_writer(const std::string& path, const std::vector<uint8_t>& data)
+    FILE* vector_disk_writer(const std::string& path, const std::vector<uint8_t>& data)
     {
 
         FILE* fp; // File pointer 
         if((fp=fopen(path.c_str(), "wb"))==NULL)
         {
             perror(path.c_str());
-            return false;
+            return fp;
         }
 
-        bool result = true;
         if (fwrite(data.data(), sizeof(uint8_t), data.size(), fp) != data.size())
         {
-            result = false;
+            return fp;
         }
         fclose(fp);
 
-        return result;
+        return fp;
     }
     
     void json_writer(const std::string& path, const nlohmann::json& data)

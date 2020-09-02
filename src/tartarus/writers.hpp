@@ -17,8 +17,8 @@ namespace writers
     /// path must contain the file name and if needed file extension.
     /// @param path is std::string representation of the path to the destination file where the data will be written
     /// @param data is a std::vector<uint8_t> which keeps the data which will be written to disk
-    /// @return if the function succeed it returns true otherwise false    
-    bool vector_disk_writer(const std::string& path, const std::vector<uint8_t>& data);
+    /// @return returns the file pointer allowing to run fsync after close 
+    FILE* vector_disk_writer(const std::string& path, const std::vector<uint8_t>& data);
     
     /// The function writes a piece of json to the file path provided
     /// @param path is a string representation of the system path to where the file is written
