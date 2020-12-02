@@ -30,15 +30,20 @@ def configure(ctx) :
 
         ctx.env.append_value('CXXFLAGS', '-stdlib=libc++')
         ctx.env.append_value('CXXFLAGS', '-isysroot/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk')
-        import platform
-        macos_ver = platform.mac_ver()[0]
-        if not macos_ver.startswith('10.15'):
-            ctx.env.append_value('CXXFLAGS', '-I/usr/local/opt/llvm/include')            
-            ctx.env.append_value('LINKFLAGS', '-L/usr/local/opt/llvm/lib')
 
-        else:
-            ctx.env.append_value('CXXFLAGS', '-I/usr/local/include')
+    import platform
+    macos_ver = [int(x) for x in (platform.mac_ver()[0]).split('.')]
 
+    if (macos_ver[0] < 10):
+        print("Unsupported version af macOS")
+        return
+    
+    if macos_ver[1] < 15:
+        ctx.env.append_value('LINKFLAGS', ['-lc++fs', '-L/usr/local/opt/llvm/lib'])
+    else:
+        ctx.env.append_value('CXXFLAGS', ['-isysroot/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk', '-I/usr/local/include'])
+        ctx.env.append_value('CFLAGS', ['-isysroot/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk', '-I/usr/local/include'])                
+        
     ctx.env.append_value('LINKFLAGS', '-pthread')            
 
 def build(bld):
