@@ -20,7 +20,7 @@ namespace readers
             throw std::runtime_error("Could not open the file");
         }
 
-        // get file size in bytes
+        // File size in bytes
         uint32_t file_size = std::filesystem::file_size(path);
 
         std::vector<uint8_t> data(file_size);

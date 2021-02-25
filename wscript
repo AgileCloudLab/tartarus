@@ -3,6 +3,8 @@
 from waflib.Tools.compiler_cxx import cxx_compiler
 from scripts.waf import utils
 
+import subprocess
+
 import sys
 import os
 
@@ -90,6 +92,7 @@ def doc(dc):
 # @param base_dir your test folder 
 def run_tests(base_dir):
 
+    os.mkdir('test_out')
     platform = sys.platform
     if not base_dir.endswith('/'):
         base_dir = base_dir + '/'
@@ -103,6 +106,7 @@ def run_tests(base_dir):
             if not proc.endswith('.o'):
                 cproc = './' + current_dir + '/' + proc
                 os.system(cproc)
+    subprocess.call(['rm', '-r', 'test_out'], encoding='utf-8')
 
 # Generate documentation for
 # @param doc_tool the name of the document tool command
