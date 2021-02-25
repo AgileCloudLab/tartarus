@@ -1,5 +1,11 @@
 # NEWS 
 
+# 8.2.0
+
+1. Fixed broken test cases for writers and readers 
+2. Avoided `std::memcpy` in vector disk reader, which should improve both memory usage and read-speed 
+
+
 # 7.2.1
 
 1. Updated the `wscript` file to the appropriate usage of `-isysroot` and removed the usage of `-lc++fs`on macOS. The later was done as it no longer works with clang on macOS due to clang fully supporting `<filesystem>` now on macOS.
