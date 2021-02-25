@@ -21,18 +21,15 @@ namespace readers
         }
 
         // get file size in bytes
-        uint32_t file_size = std::filesystem::file_size(path); 
+        uint32_t file_size = std::filesystem::file_size(path);
 
-        uint8_t* cdata = new uint8_t[file_size];
+        std::vector<uint8_t> data(file_size);
 
-        if(fread(cdata, sizeof(uint8_t), file_size, fptr) != file_size)
+        if (fread(data.data(), sizeof(uint8_t), file_size, fptr) != file_size)
         {
-	    delete[] cdata;
-            throw std::runtime_error("could not read the file");
+            throw std::runtime_error("could not read the file: " + path);
         }
 
-        std::vector<uint8_t> data(cdata, cdata + file_size);
-	delete[] cdata;
 	fclose(fptr);
 	
         return data;
